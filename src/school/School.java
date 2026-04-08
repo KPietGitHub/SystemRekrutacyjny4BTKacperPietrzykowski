@@ -19,11 +19,19 @@ public class School {
     }
 
     public void addCandidate(Candidate candidate) {
+
+        if (candidate == null) {
+            throw new IllegalArgumentException("Candidate cannot be null");
+        }
+
         candidates.add(candidate);
         applications.add(new Application(candidate));
     }
 
     public void listApplications() {
+        if(applications.isEmpty()){
+            throw new IllegalStateException("No applications in the system");
+        }
         System.out.println("List of the candidates (all):");
         for (Application application : applications) {
             System.out.println(application);
@@ -31,6 +39,9 @@ public class School {
     }
 
     public void generateAcceptedCandidatesReport() {
+        if(applications.isEmpty()){
+            throw new IllegalStateException("Cannot generate report - no applications");
+        }
         System.out.println("\nAccepted Candidates Report:");
         for (Application application : applications) {
             if (application.getStatus() == ApplicationStatus.ACCEPTED) {
@@ -41,6 +52,9 @@ public class School {
     }
 
     public void printCandidatesByScore(int threshold) {
+        if(threshold < 0){
+            throw new IllegalArgumentException("Score cannot be negative");
+        }
         System.out.println("\nCandidates with at least " + threshold + " points:");
         for (Candidate candidate : candidates) {
             int totalScore = 0;
